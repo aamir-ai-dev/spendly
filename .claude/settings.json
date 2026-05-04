@@ -1,0 +1,18 @@
+{
+  "env": {
+    "GITHUB_PERSONAL_ACCESS_TOKEN": ""
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python -c \"import sys,re; [print('WARN: non-ASCII in', f) for f in sys.argv[1:] if f.endswith('.py') and re.search(r'[^\\x00-\\x7F]', open(f,encoding='utf-8').read())]\" $CLAUDE_FILE_PATHS"
+          }
+        ]
+      }
+    ]
+  }
+}
